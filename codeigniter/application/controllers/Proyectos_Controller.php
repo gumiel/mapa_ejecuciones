@@ -6,7 +6,6 @@ class Proyectos_Controller extends CI_Controller {
 	public function prueba(){
     	//cargo el helper de url, con funciones para trabajo con URL del sitio
         $this->load->helper('url');
-        asdas
         
         //cargo el modelo de artículos
         $this->load->model('proyectos_model');
