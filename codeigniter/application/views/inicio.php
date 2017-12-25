@@ -104,10 +104,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#001a606f', e
 </style>
   </head>
   <body style="background:#51a75c">
-    
-    <?php
-    require("tmpl/menu.php");
-    ?>
+ 
     
     <div class="container" style="margin-top:10px">
       <div class="row">
