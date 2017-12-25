@@ -24,7 +24,7 @@ class Welcome extends CI_Controller {
 	}
 	
 	public function inicio(){
-		asas
+		
 		$this->load->view('inicio');
 	}
 }
