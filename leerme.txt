@@ -9,3 +9,5 @@ After the installation is complete you’ll just want to make sure mysql is runn
 mysql-ctl start
 
 primera prueba
+
+segundo
