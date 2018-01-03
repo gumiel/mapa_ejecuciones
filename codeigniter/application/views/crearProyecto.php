@@ -23,7 +23,7 @@
               <div class="col-sm-10">
                 <textarea class="form-control" id="descripcion"></textarea>
               </div>
-            </div>
+            </div>   
             <div class="form-group row">
               <label for="latitud" class="col-sm-2 col-form-label">Latitud</label>
               <div class="col-sm-10">
