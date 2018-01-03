@@ -23,7 +23,9 @@ class Proyecto extends CI_Controller {
 	}
 
 	public function crear(){
-		$this->load->view('crearProyecto') ;
+		$data['selectCategoria'] = array('1' => "Caminos");
+		$data['selectCategoriaOpt'] = array('class' => "form-control");
+		$this->load->view('crearProyecto', $data) ;
 	}		
 
 }
