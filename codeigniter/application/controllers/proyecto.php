@@ -10,17 +10,20 @@ class Proyecto extends CI_Controller {
 		$this->load->helper("cadena");
 	}
 
-	public function index(){
-    	echo "hola";
+	public function index(){    
 		$this->load->view('inicio');
 	}
 
 	
 
-	public function categoria($id){
+	public function categoria($id=""){
 		echo $id;
 		$data['proyectos'] = $this->proyecto_model->listAllProyecto();
 		$this->load->view('listaProyectos', $data) ;
 	}
+
+	public function crear(){
+		$this->load->view('crearProyecto') ;
+	}		
 
 }
