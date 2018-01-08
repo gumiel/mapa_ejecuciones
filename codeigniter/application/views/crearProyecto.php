@@ -42,7 +42,7 @@
             <div class="form-group row">
               <label for="departamento" class="col-sm-2 col-form-label">Departamento</label>
               <div class="col-sm-10">
-                <select class="form-control" id="departamento"></select>
+                <?php echo form_dropdown('departamento', $selectDepartamento, "", $selectDepartamentoOpt); ?>
               </div>
             </div>
             <div class="form-group row">

@@ -7,6 +7,8 @@ class Proyecto extends CI_Controller {
 	{
 		parent::__construct();
 		$this->load->model('proyecto_model');		
+		$this->load->model('categoria_model');		
+		$this->load->model('departamento_model');		
 		$this->load->helper("cadena");
 	}
 
@@ -23,9 +25,16 @@ class Proyecto extends CI_Controller {
 	}
 
 	public function crear(){
+
 		$data['selectCategoria'] = array('1' => "Caminos");
 		$data['selectCategoriaOpt'] = array('class' => "form-control");
+
+		$data['selectDepartamento'] = $this->departamento_model->departamentoSelectList();
+		print_r($data['selectDepartamento']);
+		$data['selectDepartamentoOpt'] = array('class' => "form-control");
+
 		$this->load->view('crearProyecto', $data) ;
+
 	}		
 
 }
