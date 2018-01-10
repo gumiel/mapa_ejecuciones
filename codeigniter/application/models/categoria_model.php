@@ -9,6 +9,13 @@ class Categoria_model extends CI_Model {
 		//Do your magic here
 	}
 
+	public function categoriaSelectList(){
+		$this->db->select('id_categoria as id, nombre');		
+		$this->db->order_by('id_categoria', 'ASC');
+		$res = $this->db->get('categoria');
+		return $res->result_array(); 
+	}
+
 }
 
 /* End of file categoria_model.php */

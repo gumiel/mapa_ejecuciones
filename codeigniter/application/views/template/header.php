@@ -6,6 +6,7 @@
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="<?php echo base_url(); ?>public/css/bootstrap.min.css" >
+    <link href="<?php echo base_url(); ?>public/css/summernote-bs4.css" rel="stylesheet">
     <style>
       @import url('https://fonts.googleapis.com/css?family=Libre+Baskerville:400,700');
 
@@ -100,4 +101,24 @@
               transform: rotateY(0);
     }
     </style>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <!-- bootstrap 4.x is supported. You can also use the bootstrap css 3.3.x versions -->
+<link href="<?php echo base_url(); ?>public/css/fileinput.min.css" media="all" rel="stylesheet" type="text/css" />
+
+
 </head>

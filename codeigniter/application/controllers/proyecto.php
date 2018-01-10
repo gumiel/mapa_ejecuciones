@@ -10,6 +10,7 @@ class Proyecto extends CI_Controller {
 		$this->load->model('categoria_model');		
 		$this->load->model('departamento_model');		
 		$this->load->helper("cadena");
+		$this->load->helper("select_helper");
 	}
 
 	public function index(){    
@@ -26,12 +27,13 @@ class Proyecto extends CI_Controller {
 
 	public function crear(){
 
-		$data['selectCategoria'] = array('1' => "Caminos");
-		$data['selectCategoriaOpt'] = array('class' => "form-control");
+		$selectCategoria = $this->categoria_model->categoriaSelectList();
+		$data['selectCategoria'] = formatoSelect($selectCategoria, "id", "nombre", "Seleccione");
+		$data['selectCategoriaOpt'] = array('class' => "form-control", 'id'=> 'categoria');
 
-		$data['selectDepartamento'] = $this->departamento_model->departamentoSelectList();
-		print_r($data['selectDepartamento']);
-		$data['selectDepartamentoOpt'] = array('class' => "form-control");
+		$selectDepartamento = $this->departamento_model->departamentoSelectList();
+		$data['selectDepartamento'] = formatoSelect($selectDepartamento, "id", "nombre", "Seleccione");
+		$data['selectDepartamentoOpt'] = array('class' => "form-control", 'id'=> 'departamento');
 
 		$this->load->view('crearProyecto', $data) ;
 
