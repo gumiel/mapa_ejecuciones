@@ -102,7 +102,7 @@ class Proyecto extends CI_Controller {
 			'id_departamento' => $id_departamento, 
 			'id_categoria' => $id_categoria);
 			$this->proyecto_model->createProyecto($data);
-			echo " se creo";
+			redirect('proyecto/crear', 'refresh');
         }
         else
         {
@@ -110,6 +110,11 @@ class Proyecto extends CI_Controller {
             $this->load->view('crearProyecto');
         }
 
+	}
+
+	public function mapa(){
+		$data = array('categoria' => '');
+		$this->load->view('mapa', $data, FALSE);
 	}	
 
 }
