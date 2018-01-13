@@ -17,6 +17,24 @@ class Proyecto_model extends CI_Model {
 		return $res->result_array();
 	}
 
+	public function createProyecto($data){
+		$res = false;
+		try {
+			$this->db->insert('proyecto', array(
+				'titulo' => $data['titulo'], 
+				'descripcion' => $data['descripcion'],
+				 'latitud' => $data['latitud'], 
+				 'longitud' => $data['longitud'], 
+				 'zoom' => $data['zoom'], 
+				 'id_departamento' => $data['id_departamento'], 
+				 'id_categoria' => $data['id_categoria']));
+			$res = true;			
+		} catch (Exception $e) {
+			echo $e;
+		}
+		return $res;
+	}
+
 }
 
 /* End of file proyecto_model.php */

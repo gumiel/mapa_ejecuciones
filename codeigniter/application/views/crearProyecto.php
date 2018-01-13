@@ -21,44 +21,33 @@
       
       <div class="row">
         <div class="col-md-12">
-          <form>
+          <?php echo form_open_multipart('proyecto/procesarCreacion'); ?>
             <div class="form-group row">
               <label for="titulo" class="col-sm-2 col-form-label">Titulo</label>
-              <div class="col-sm-10">
-                <input type="text" class="form-control" id="titulo" value="Planta de cítricos Lacteosbol" >
+              <div class="col-sm-10">                
+                <?php echo form_input(array("class"=>"form-control", "id"=>"titulo",  "name"=>"titulo","value"=>"Planta de cítricos Lacteosbol" )); ?>
               </div>
             </div>
             <div class="form-group row">
               <label for="descripcion" class="col-sm-2 col-form-label">Descripción</label>
               <div class="col-sm-10">
-                <textarea class="form-control" id="descripcion">Blandit praesent luptatum
-                    zzril delenit augue duis dolore te feugait nulla facilisi.
-                    Nam liber tempor cum soluta nobis eleifend option congue
-                    nihil imperdiet doming id quod mazim placerat facer possim
-                    assum. Typi non habent claritatem insitam; est usus legentis
-                    in iis qui facit eorum claritatem. Investigationes
-                    demonstraverunt lectores legere me lius quod ii legunt saepius.
-                    Claritas est etiam processus dynamicus, qui sequitur mutationem
-                    consuetudium lectorum. Mirum est notare quam littera gothica,
-                    quam nunc putamus parum claram, anteposuerit litterarum formas
-                    humanitatis per seacula quarta decima et quinta decima. Eodem
-                    modo typi, qui nunc nobis videntur parum clari, fiant sollemnes
-                    in futurum.</textarea>
+                <?php echo form_textarea(array("type"=>"textarea", "class"=>"form-control", "id"=>"descripcion", "value"=>"", "name"=>"descripcion" )); ?>
+
               </div>
             </div>   
             <div class="form-group row">
               <label for="latitud" class="col-sm-2 col-form-label">Latitud</label>
               <div class="col-sm-8">
-                <input type="text" class="form-control" id="latitud" value="-17.393308" >
+                <?php echo form_input(array("class"=>"form-control","name"=>"latitud", "id"=>"latitud", "value"=>"-17.393308")); ?>
               </div>
-              <div class="col-sm-2">
-                <input type="text" class="form-control" id="zoom" value="" placeholder ="Zoom">                
+              <div class="col-sm-2">                
+                <?php echo form_input(array("class"=>"form-control", "name"=>"zoom", "id"=>"zoom", "value"=>"", "name"=>"zoom" )); ?>
               </div>
             </div>
             <div class="form-group row">
               <label for="longitud" class="col-sm-2 col-form-label">Longitud</label>
-              <div class="col-sm-8">
-                <input type="text" class="form-control" id="longitud" value="-66.184276" >                
+              <div class="col-sm-8">              
+                <?php echo form_input(array("class"=>"form-control","name"=>"longitud", "id"=>"longitud", "value"=>"-66.184276")); ?>              
               </div>
               <div class="col-sm-2">
                 <button type="button" class="btn btn-success" id="btnVerMapa">Ver Mapa</button>
@@ -79,7 +68,12 @@
             <div class="form-group row">
               <label for="titulo" class="col-sm-2 col-form-label">Imagenes</label>
               <div class="col-sm-10" id="contentImg">
-                <input type="file" class="form-control" id="imagen[]" value="" >              
+                <div class="input-group mb-3">
+                  <?php echo form_input(array("type"=>"file", "class"=>"form-control","name"=>"imagen[]", "value"=>"")); ?> 
+                  <div class="input-group-append">
+                    <button class="btn btn-outline-danger btnEliminarImagen" type="button">X</button>
+                  </div>
+                </div>           
               </div>
             </div>
             <div class="form-group row">
@@ -92,10 +86,10 @@
               <label for="titulo" class="col-sm-2 col-form-label"></label>
               <div class="col-sm-10">
                 <button type='button' id="vistaPrevia" class="btn btn-primary">Vista Previa</button>
-                <button type='button' id="publicar" class="btn btn-success">Publicar</button>
+                <button type='submit' id="publicar" class="btn btn-success">Publicar</button>
               </div>
             </div>
-          </form>
+          <?php echo form_close(); ?>
         </div>
       </div>      
 
@@ -155,11 +149,7 @@
                 </div>
                 
                 <div class="card">
-                  <div class="card-body">
-                    <img data-src="holder.js/75x75" class="rounded"  style="width: 168px; height: 150px;" src="data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2275%22%20height%3D%2275%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2075%2075%22%20preserveAspectRatio%3D%22none%22%3E%3Cdefs%3E%3Cstyle%20type%3D%22text%2Fcss%22%3E%23holder_160e0772ac7%20text%20%7B%20fill%3Argba(255%2C255%2C255%2C.75)%3Bfont-weight%3Anormal%3Bfont-family%3AHelvetica%2C%20monospace%3Bfont-size%3A10pt%20%7D%20%3C%2Fstyle%3E%3C%2Fdefs%3E%3Cg%20id%3D%22holder_160e0772ac7%22%3E%3Crect%20width%3D%2275%22%20height%3D%2275%22%20fill%3D%22%23777%22%3E%3C%2Frect%3E%3Cg%3E%3Ctext%20x%3D%2219.34375%22%20y%3D%2242.05625%22%3E75x75%3C%2Ftext%3E%3C%2Fg%3E%3C%2Fg%3E%3C%2Fsvg%3E" data-holder-rendered="true">
-                    <img data-src="holder.js/75x75" class="rounded"  style="width: 168px; height: 150px;" src="data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2275%22%20height%3D%2275%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2075%2075%22%20preserveAspectRatio%3D%22none%22%3E%3Cdefs%3E%3Cstyle%20type%3D%22text%2Fcss%22%3E%23holder_160e0772ac7%20text%20%7B%20fill%3Argba(255%2C255%2C255%2C.75)%3Bfont-weight%3Anormal%3Bfont-family%3AHelvetica%2C%20monospace%3Bfont-size%3A10pt%20%7D%20%3C%2Fstyle%3E%3C%2Fdefs%3E%3Cg%20id%3D%22holder_160e0772ac7%22%3E%3Crect%20width%3D%2275%22%20height%3D%2275%22%20fill%3D%22%23777%22%3E%3C%2Frect%3E%3Cg%3E%3Ctext%20x%3D%2219.34375%22%20y%3D%2242.05625%22%3E75x75%3C%2Ftext%3E%3C%2Fg%3E%3C%2Fg%3E%3C%2Fsvg%3E" data-holder-rendered="true">
-                    <img data-src="holder.js/75x75" class="rounded"  style="width: 168px; height: 150px;" src="data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2275%22%20height%3D%2275%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2075%2075%22%20preserveAspectRatio%3D%22none%22%3E%3Cdefs%3E%3Cstyle%20type%3D%22text%2Fcss%22%3E%23holder_160e0772ac7%20text%20%7B%20fill%3Argba(255%2C255%2C255%2C.75)%3Bfont-weight%3Anormal%3Bfont-family%3AHelvetica%2C%20monospace%3Bfont-size%3A10pt%20%7D%20%3C%2Fstyle%3E%3C%2Fdefs%3E%3Cg%20id%3D%22holder_160e0772ac7%22%3E%3Crect%20width%3D%2275%22%20height%3D%2275%22%20fill%3D%22%23777%22%3E%3C%2Frect%3E%3Cg%3E%3Ctext%20x%3D%2219.34375%22%20y%3D%2242.05625%22%3E75x75%3C%2Ftext%3E%3C%2Fg%3E%3C%2Fg%3E%3C%2Fsvg%3E" data-holder-rendered="true">
-                    <img data-src="holder.js/75x75" class="rounded"  style="width: 168px; height: 150px;" src="data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2275%22%20height%3D%2275%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2075%2075%22%20preserveAspectRatio%3D%22none%22%3E%3Cdefs%3E%3Cstyle%20type%3D%22text%2Fcss%22%3E%23holder_160e0772ac7%20text%20%7B%20fill%3Argba(255%2C255%2C255%2C.75)%3Bfont-weight%3Anormal%3Bfont-family%3AHelvetica%2C%20monospace%3Bfont-size%3A10pt%20%7D%20%3C%2Fstyle%3E%3C%2Fdefs%3E%3Cg%20id%3D%22holder_160e0772ac7%22%3E%3Crect%20width%3D%2275%22%20height%3D%2275%22%20fill%3D%22%23777%22%3E%3C%2Frect%3E%3Cg%3E%3Ctext%20x%3D%2219.34375%22%20y%3D%2242.05625%22%3E75x75%3C%2Ftext%3E%3C%2Fg%3E%3C%2Fg%3E%3C%2Fsvg%3E" data-holder-rendered="true">
+                  <div class="card-body" id="listaImgVistaPrevia">
                   </div>
                 </div>
                 
@@ -233,14 +223,26 @@
       var markerVP = null;
       var infowindowVP = null;
 
+
+      //para las imagenes previas
+      var cadenaImagenes = new Array();
+
       $(document).ready(function(){
 
-        
+        $('.btnEliminarImagen').click(function(){
+          $(this).parent().parent().remove();
+        });
         
         
         $("#addImg").click(function(){
-          var btn = '<input type="file" class="form-control" id="imagen[]" value="" >';
+          // var btn = '<input type="file" class="form-control" name="imagen[]" value="" >';
+          var btn = '<div class="input-group mb-3"><input type="file" class="form-control" name="imagen[]" value="" ><div class="input-group-append"><button class="btn btn-outline-danger btnEliminarImagen" type="button">X</button></div></div>';
           $("#contentImg").prepend(btn);
+
+          $('.btnEliminarImagen').click(function(){
+            $(this).parent().parent().remove();
+          });
+
         });
 
         $("#titulo").fileinput();
@@ -256,20 +258,34 @@
         });
 
         $("#vistaPrevia").click(function(){
-          $("#modalMapaVistaPrevia").modal("show");          
+          
+          $("#listaImgVistaPrevia").html('');          
+          $("#modalMapaVistaPrevia").modal("show");             
+          $("input[name='imagen[]']").each(function(){
+
+            //cadenaImagenes = new array();
+            seleccionArchivo(this);  
+          
+          });
+
+          console.log("AQUI ESSSSSSS"+cadenaImagenes);
+
+
+
         });
 
         $('#modalMapaVistaPrevia').on('shown.bs.modal', function (e) {
           
           var latitudVP = $("#latitud").val();
           var longitudVP = $("#longitud").val();
+          var zoomVP = $("#zoom").val();
           
           if(mapVP == null){
             console.log("creado nuevo");
             initMapVistaPrevia();           
           }
           
-          verMapaVistaPrevia(latitudVP, longitudVP);
+          verMapaVistaPrevia(latitudVP, longitudVP, zoomVP);
 
           $("#tituloVP").html($("#titulo").val());
           $("#descripcionVP").html($("#descripcion").html());
@@ -421,7 +437,7 @@
       
       }
 
-      function verMapaVistaPrevia(latitudVP, longitudVP){
+      function verMapaVistaPrevia(latitudVP, longitudVP, zoomVP){
         if ( latitudVP != "" &&  longitudVP != "") {
 
           console.log("con datos");
@@ -435,7 +451,7 @@
           var myLatLngMakerVP = {lat: parseFloat(latitudVP), lng: parseFloat(longitudVP)};
           console.log(myLatLngMakerVP);
           mapVP.setCenter(myLatLngMakerVP);
-          mapVP.setZoom(14);
+          mapVP.setZoom(parseInt(zoomVP)) ;
           
           markerVP = new google.maps.Marker({
             map: mapVP,
@@ -466,6 +482,22 @@
           
         } 
       }
+
+      
+
+      function seleccionArchivo(input){
+        if (input.files && input.files[0]) {
+          var reader = new FileReader();
+          reader.onload = function (e) {
+              var imgSrc = '<img data-src="holder.js/75x75" class="rounded"  style="width: 168px; height: 150px;" src="'+e.target.result+'" data-holder-rendered="true">';
+              $("#listaImgVistaPrevia").prepend(imgSrc)
+          }
+
+          reader.readAsDataURL(input.files[0]);
+        }
+      }
+
+      
       
     </script>
     
