@@ -4,12 +4,8 @@
   $this->load->view('template/header');
   ?>
   <style>
-     #mapaGMaps {
-      height: 300px;
-      width: 100%;
-     }
-     #mapVP {
-      height: 300px;
+     #map {
+      height: 500px;
       width: 100%;
      }
   </style>
@@ -166,20 +162,8 @@
 
         })
 
-
-        $('#modalMapa').on('shown.bs.modal', function (e) {
-          var latitud = $("#latitud").val();
-          var longitud = $("#longitud").val();
-          
-          if(map == null){
-            console.log("creado nuevo");
-            initMap();            
-          }
-          
-          verMapa(latitud, longitud);
-          modifiZoom();
-
-        })
+        
+        initMap();  
 
         $("#saveMap").click(function(){
 
@@ -194,7 +178,7 @@
 
       function initMap(){
         
-        map = new google.maps.Map(document.getElementById('mapaGMaps'), {
+        map = new google.maps.Map(document.getElementById('map'), {
           center: myLatLngDefault,
           zoom: 6
         });
