@@ -35,6 +35,24 @@ class Proyecto_model extends CI_Model {
 		return $res;
 	}
 
+	public function listaPuntosMapa()
+	{		
+		$this->db->select('titulo as marcadorTexto, latitud, longitud');		
+		$this->db->order_by('id_proyecto', 'ASC');
+		$res = $this->db->get('proyecto');
+		return $res->result_array();
+	}
+
+	public function listaPuntosMapaPorDepartamento($nombreDepartamento)
+	{		
+		$this->db->select('titulo as marcadorTexto, latitud, longitud');		
+		$this->db->order_by('id_proyecto', 'ASC');
+		$this->db->join('departamento', 'departamento.id = proyecto.id_departamento');
+		$this->db->where('proyecto.nombre', $nombreDepartamento);
+		$res = $this->db->get('proyecto');
+		return $res->result_array();
+	}
+
 }
 
 /* End of file proyecto_model.php */

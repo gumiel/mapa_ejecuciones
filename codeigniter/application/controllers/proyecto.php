@@ -112,8 +112,13 @@ class Proyecto extends CI_Controller {
 
 	}
 
-	public function mapa(){
-		$data = array('categoria' => '');
+	public function mapa($departamento = ''){
+		if($departamento != '' ){
+			$data['listaPuntos'] = $this->proyecto_model->listaPuntosMapa();
+		}else{
+			$data['listaPuntos'] = $this->proyecto_model->listaPuntosMapaPorDepartamento($departamento);
+		}		
+		
 		$this->load->view('mapa', $data, FALSE);
 	}	
 

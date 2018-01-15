@@ -61,7 +61,7 @@
     <script src="<?php echo base_url(); ?>public/js/bootstrap.min.js" ></script>
     <script src="<?php echo base_url(); ?>public/js/summernote-bs4.js"></script>
     <script src="<?php echo base_url(); ?>public/lang/summernote-es-ES.js"></script>
-    <script async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBMn_-6DY-Yj1dxANofEJlcDDvOpNoxvFk"  ></script>
+    <script async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBMn_-6DY-Yj1dxANofEJlcDDvOpNoxvFk&callback=initMap"  ></script>
     <script src="<?php echo base_url(); ?>public/js/plugins/piexif.min.js" type="text/javascript"></script>
 
 <script src="<?php echo base_url(); ?>public/js/plugins/sortable.min.js" type="text/javascript"></script>
@@ -84,97 +84,16 @@
       var marker = null;
       var infowindow = null;
 
-      // para vista previa
-      var myLatLngDefaultVP = {lat: -16.833564, lng: -65.348245};
-      var myLatLngVP = null;
-      var mapVP = null;
-      var markerVP = null;
-      var infowindowVP = null;
+      var puntosList = [
+<?php forEach($listaPuntos as $punto ){ ?>
 
+      { marcadorTexto: '<?php echo $punto['marcadorTexto'] ?>', 
+      posicion: { latitud: <?php echo $punto['latitud'] ?>, longitud: <?php echo $punto['longitud'] ?> } },
 
-      //para las imagenes previas
-      var cadenaImagenes = new Array();
+<?php } ?>
+      ]
 
-      $(document).ready(function(){
-
-        $('.btnEliminarImagen').click(function(){
-          $(this).parent().parent().remove();
-        });
-        
-        
-        $("#addImg").click(function(){
-          // var btn = '<input type="file" class="form-control" name="imagen[]" value="" >';
-          var btn = '<div class="input-group mb-3"><input type="file" class="form-control" name="imagen[]" value="" ><div class="input-group-append"><button class="btn btn-outline-danger btnEliminarImagen" type="button">X</button></div></div>';
-          $("#contentImg").prepend(btn);
-
-          $('.btnEliminarImagen').click(function(){
-            $(this).parent().parent().remove();
-          });
-
-        });
-
-        $("#titulo").fileinput();
-
-        $('#descripcion').summernote({          
-          tabsize: 2,
-          height: 300,
-          lang: 'es-ES' // default: 'en-US'
-        });
-
-        $("#btnVerMapa").click(function(){
-          $("#modalMapa").modal("show");          
-        });
-
-        $("#vistaPrevia").click(function(){
-          
-          $("#listaImgVistaPrevia").html('');          
-          $("#modalMapaVistaPrevia").modal("show");             
-          $("input[name='imagen[]']").each(function(){
-
-            //cadenaImagenes = new array();
-            seleccionArchivo(this);  
-          
-          });
-
-          console.log("AQUI ESSSSSSS"+cadenaImagenes);
-
-
-
-        });
-
-        $('#modalMapaVistaPrevia').on('shown.bs.modal', function (e) {
-          
-          var latitudVP = $("#latitud").val();
-          var longitudVP = $("#longitud").val();
-          var zoomVP = $("#zoom").val();
-          
-          if(mapVP == null){
-            console.log("creado nuevo");
-            initMapVistaPrevia();           
-          }
-          
-          verMapaVistaPrevia(latitudVP, longitudVP, zoomVP);
-
-          $("#tituloVP").html($("#titulo").val());
-          $("#descripcionVP").html($("#descripcion").html());
-          $("#departamentoVP").html($("#departamento > option[value='"+$("#departamento").val()+"']").html());
-          $("#categoriaVP").html($("#categoria > option[value='"+$("#categoria").val()+"']").html());          
-
-        })
-
-        
-        initMap();  
-
-        $("#saveMap").click(function(){
-
-          $("#latitud").val(marker.position.lat());
-          $("#longitud").val(marker.position.lng());
-          $("#zoom").val($("#zoomMap").html());
-          $("#modalMapa").modal("hide");
-
-        });
-        
-      });
+      initMap(); 
 
       function initMap(){
         
@@ -182,178 +101,36 @@
           center: myLatLngDefault,
           zoom: 6
         });
-      
-      }
 
-
-      function verMapa(latitud, longitud){
         
-        if ( latitud != "" &&  longitud != "") {
 
-          console.log("con datos");
-          
-          if(marker != null){
-            console.log("matar marcador");
-            marker.setMap(null);  
-            infowindow.setMap(null);  
-          }
-          
-          var myLatLngMaker = {lat: parseFloat(latitud), lng: parseFloat(longitud)};
-          console.log(myLatLngMaker);
-          map.setCenter(myLatLngMaker);
-          map.setZoom(14);
-          
-          marker = new google.maps.Marker({
+        puntosList.forEach(function(e){
+          var marcadorTexto = e.marcadorTexto;
+          var latitud = e.posicion.latitud;
+          var longitud = e.posicion.longitud;
+
+          var infowindow = new google.maps.InfoWindow({
+            content: marcadorTexto
+          });
+
+          var marker1 = new google.maps.Marker({
             map: map,
-            position: myLatLngMaker,
-            draggable: true,
+            position: {lat: latitud, lng: longitud},
             animation: google.maps.Animation.DROP,
-            title: 'Marcador arrastrable'
-          });
-
-          var markerLatLng = marker.getPosition();
-          var contentString = '<strong>La posicion del marcador es:</strong><br/>'+
-            markerLatLng.lat()+
-            ', '+
-            markerLatLng.lng()+
-            '<br/>Arrástrame para actualizar la posición.';
-          infowindow = new google.maps.InfoWindow({
-            content: contentString
+            title: 'Doble via La Paz - Oruro'
           });
           
-          infowindow.open(map, marker);
-          
-          
-
-          // google.maps.event.addListener(marker, 'dragend', function(){
-
-          //   var markerLatLng = marker.getPosition();
-          //   myLatLng = {lat: markerLatLng.lat(), lng: markerLatLng.lng()};
-          //   infowindow.setContent([
-          //       '<strong>La posicion del marcador es:</strong><br/>',
-          //       markerLatLng.lat(),
-          //       ', ',
-          //       markerLatLng.lng(),
-          //       '<br/>Arrástrame para actualizar la posición.'
-          //   ].join(''));
-          //   infowindow.open(map, marker);
-          // });
-
-          google.maps.event.addListener(map, 'click', function(event) {
-            addMarkerClick(event.latLng, map);
+          marker1.addListener('mouseover', function() {
+            infowindow.open(map, marker1);
           });
           
-        }else{
-          console.log("sin datos");
-          marker.setMap(null);
-          map.setCenter(myLatLngDefault);
-          map.setZoom(6);
-          
+          marker1.addListener('mouseout', function() {
+            infowindow.close();
+          });
 
-          
-        }        
-      }
-
-      function addMarkerClick(location, map) {
-        
-        marker.setMap(null);
-        marker = new google.maps.Marker({
-          position: location,
-          map: map
-        });
-        var markerLatLng = marker.getPosition();
-        infowindow.setContent([
-            '<strong>La posicion del marcador es:</strong><br/>',
-            markerLatLng.lat(),
-            ', ',
-            markerLatLng.lng(),
-            '<br/>Arrástrame para actualizar la posición.'
-        ].join(''));
-        infowindow.open(map, marker);
-
-      }
-
-      function modifiZoom(){
-
-        var zoom = map.getZoom();
-        $("#zoomMap").html(zoom);
-
-        map.addListener('zoom_changed', function() {
-          $("#zoomMap").html(map.getZoom());
-        });
-
-      }
-
-      function initMapVistaPrevia(){
-        console.log("VISTA PREVIA MAPA");
-        mapVP = new google.maps.Map(document.getElementById('mapVP'), {
-          center: myLatLngDefaultVP,
-          zoom: 6
         });
       
-      }
-
-      function verMapaVistaPrevia(latitudVP, longitudVP, zoomVP){
-        if ( latitudVP != "" &&  longitudVP != "") {
-
-          console.log("con datos");
-          
-          if(markerVP != null){
-            console.log("matar marcador");
-            markerVP.setMap(null);  
-            infowindowVP.setMap(null);  
-          }
-          
-          var myLatLngMakerVP = {lat: parseFloat(latitudVP), lng: parseFloat(longitudVP)};
-          console.log(myLatLngMakerVP);
-          mapVP.setCenter(myLatLngMakerVP);
-          mapVP.setZoom(parseInt(zoomVP)) ;
-          
-          markerVP = new google.maps.Marker({
-            map: mapVP,
-            position: myLatLngMakerVP,
-            animation: google.maps.Animation.DROP,
-            title: 'Marcador arrastrable'
-          });
-
-          var markerLatLngVP = markerVP.getPosition();
-          var contentStringVP = '<strong>La posicion del marcador es:</strong><br/>'+
-            markerLatLngVP.lat()+
-            ', '+
-            markerLatLngVP.lng()+
-            '<br/>Arrástrame para actualizar la posición.';
-          infowindowVP = new google.maps.InfoWindow({
-            content: contentStringVP
-          });
-          
-          infowindowVP.open(mapVP, markerVP);
-          
-        }else{
-          console.log("sin datos");
-          markerVP.setMap(null);
-          mapVP.setCenter(myLatLngDefaultVP);
-          mapVP.setZoom(6);
-          
-
-          
-        } 
-      }
-
-      
-
-      function seleccionArchivo(input){
-        if (input.files && input.files[0]) {
-          var reader = new FileReader();
-          reader.onload = function (e) {
-              var imgSrc = '<img data-src="holder.js/75x75" class="rounded"  style="width: 168px; height: 150px;" src="'+e.target.result+'" data-holder-rendered="true">';
-              $("#listaImgVistaPrevia").prepend(imgSrc)
-          }
-
-          reader.readAsDataURL(input.files[0]);
-        }
-      }
-
-      
+      }     
       
     </script>
     
