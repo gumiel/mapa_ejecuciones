@@ -14,8 +14,8 @@
     <?php $this->load->view('template/menu'); ?>
     
     <div class="container" style="margin-top:10px">
+      <h3 style="display:inline">Mapa de proyectos concluidos</h3>
       <div class="row">
-        <h3 style="display:inline">Mapa de proyectos concluidos</h3>
         <div class="col-md-8 text-right">
           Seleccione el departamento:
         </div>
