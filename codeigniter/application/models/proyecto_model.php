@@ -45,11 +45,10 @@ class Proyecto_model extends CI_Model {
 
 	public function listaPuntosMapaPorDepartamento($nombreDepartamento)
 	{		
-		$this->db->select('titulo as marcadorTexto, latitud, longitud');		
-		$this->db->order_by('id_proyecto', 'ASC');
-		$this->db->join('departamento', 'departamento.id = proyecto.id_departamento');
-		$this->db->where('proyecto.nombre', $nombreDepartamento);
-		$res = $this->db->get('proyecto');
+		$this->db->select('titulo as marcadorTexto, latitud, longitud ');
+		$this->db->join('departamento', 'departamento.id_departamento = proyecto.id_departamento');	
+		$this->db->from('proyecto');					
+		$res = $this->db->get();
 		return $res->result_array();
 	}
 

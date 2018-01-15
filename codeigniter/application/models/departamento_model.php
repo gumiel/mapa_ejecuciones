@@ -16,6 +16,13 @@ class Departamento_model extends CI_Model {
 		return $res->result_array(); 
 	}
 
+	public function departamentoUrlSelectList(){
+		$this->db->select('nombre_url as id, nombre');		
+		$this->db->order_by('id_departamento', 'ASC');
+		$res = $this->db->get('departamento');
+		return $res->result_array(); 
+	}
+
 }
 
 /* End of file departamento_model.php */

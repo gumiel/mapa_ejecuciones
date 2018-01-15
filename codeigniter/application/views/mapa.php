@@ -15,21 +15,17 @@
     
     <div class="container" style="margin-top:10px">
       <div class="row">
+        <h3 style="display:inline">Mapa de proyectos concluidos</h3>
+        <div class="col-md-8 text-right">
+          Seleccione el departamento:
+        </div>
+        <div class="col-md-4">
+          
+            <?php echo form_dropdown('departamento', $selectDepartamento, "", $selectDepartamentoOpt); ?>
+          
+        </div>
         <div class="col-md-12">
-          <div>
-            <h3 style="display:inline">Mapa de proyectos concluidos</h3>
-            <span class="dropdown">
-              <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Seleccione Por:
-              </button>
-              <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                <a class="dropdown-item" href="#">Todos</a>
-                <a class="dropdown-item" href="#">Caminos</a>
-                <a class="dropdown-item" href="#">Escuelas</a>
-              </div>
-            </span>
-          </div>
-          <br>
+          
           <div class="card">
             <div class="card-body">
               <div id="map">MAPA</div>
