@@ -46,32 +46,14 @@
 
 
 
-
-
-
-    <!-- Optional JavaScript -->
+<?php 
+  $this->load->view('template/css'); 
+?>
     
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
-    <script src="<?php echo base_url(); ?>public/js/bootstrap.min.js" ></script>
-    <script src="<?php echo base_url(); ?>public/js/summernote-bs4.js"></script>
-    <script src="<?php echo base_url(); ?>public/lang/summernote-es-ES.js"></script>
+    <!-- Optional JavaScript -->
     <script async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBMn_-6DY-Yj1dxANofEJlcDDvOpNoxvFk&callback=initMap"  ></script>
-    <script src="<?php echo base_url(); ?>public/js/plugins/piexif.min.js" type="text/javascript"></script>
+    
 
-<script src="<?php echo base_url(); ?>public/js/plugins/sortable.min.js" type="text/javascript"></script>
-
-<script src="<?php echo base_url(); ?>public/js/plugins/purify.min.js" type="text/javascript"></script>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
-
-<!-- the main fileinput plugin file -->
-<script src="<?php echo base_url(); ?>public/js/fileinput.min.js"></script>
-<!-- optionally uncomment line below for loading your theme assets for a theme like Font Awesome (`fa`) -->
-<!-- script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/4.4.5/themes/fa/theme.min.js"></script -->
-<!-- optionally if you need translation for your language then include  locale file as mentioned below -->
-<script src="<?php echo base_url(); ?>public/js/locales/LANG.js"></script>
     <script >
 
       var myLatLngDefault = {lat: -16.833564, lng: -65.348245};
