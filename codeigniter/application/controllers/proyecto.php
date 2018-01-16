@@ -31,9 +31,9 @@ class Proyecto extends CI_Controller {
 
 	
 
-	public function categoria($id=""){
-		echo $id;
-		$data['proyectos'] = $this->proyecto_model->listAllProyecto();
+	public function categoria($categoria=""){
+		
+		$data['proyectos'] = $this->proyecto_model->listProyectoPorCategoria($categoria);
 		$this->load->view('listaProyectos', $data) ;
 	}
 
@@ -114,19 +114,22 @@ class Proyecto extends CI_Controller {
 
 	public function mapa($departamento = ''){
 
+		$departamentoUrl = "";
 		
 		$url = base_url()."proyecto/mapa/";
 		
 		if($departamento == '' ){
 			$data['listaPuntos'] = $this->proyecto_model->listaPuntosMapa();
 		}else{
+			$departamentoUrl = $departamento;
 			$data['listaPuntos'] = $this->proyecto_model->listaPuntosMapaPorDepartamento($departamento);
 		}
 
 		$selectDepartamento = $this->departamento_model->departamentoUrlSelectList();
-		$data['selectDepartamento'] = formatoSelect($selectDepartamento, "id", "nombre", "Seleccione");
+		$data['selectDepartamento'] = formatoSelect($selectDepartamento, "id", "nombre", "Todos",$departamento);
 		$data['selectDepartamentoOpt'] = array('class' => "form-control", 'id'=> 'departamento','onChange'=>"window.location.href= '".$url."'+document.getElementById(this.id).value");		
-		
+		$data['departamentoUrl'] = $departamentoUrl;
+
 		$this->load->view('mapa', $data, FALSE);
 	}	
 

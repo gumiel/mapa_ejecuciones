@@ -8,7 +8,7 @@
       $this->load->view('template/css'); 
     ?>
     
-    <style>
+    <!-- <style>
       @import url('https://fonts.googleapis.com/css?family=Libre+Baskerville:400,700');
 
     h2{float:left; width:100%; color:#14594d; margin-bottom:60px; font-size: 14px; position:relartive; z-index:3;}
@@ -101,7 +101,7 @@
       -webkit-transform: rotateY(0);
               transform: rotateY(0);
     }
-    </style>
+    </style> -->
 
 
 

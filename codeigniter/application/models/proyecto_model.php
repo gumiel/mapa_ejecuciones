@@ -9,7 +9,7 @@ class Proyecto_model extends CI_Model {
 		// $this->load->library('encrypt');
 	}
 
-	public function listAllProyecto()
+	public function listProyectoPorCategoria()
 	{		
 		$this->db->select('*');		
 		$this->db->order_by('id_proyecto', 'ASC');
@@ -47,7 +47,8 @@ class Proyecto_model extends CI_Model {
 	{		
 		$this->db->select('titulo as marcadorTexto, latitud, longitud ');
 		$this->db->join('departamento', 'departamento.id_departamento = proyecto.id_departamento');	
-		$this->db->from('proyecto');					
+		$this->db->from('proyecto');	
+		$this->db->where('departamento.nombre_url', $nombreDepartamento);				
 		$res = $this->db->get();
 		return $res->result_array();
 	}

@@ -20,8 +20,8 @@
           Seleccione el departamento:
         </div>
         <div class="col-md-4">
-          
-            <?php echo form_dropdown('departamento', $selectDepartamento, "", $selectDepartamentoOpt); ?>
+            
+            <?php echo form_dropdown('departamento', $selectDepartamento, $departamentoUrl, $selectDepartamentoOpt); ?>
           
         </div>
         <div class="col-md-12">
@@ -47,7 +47,7 @@
 
 
 <?php 
-  $this->load->view('template/css'); 
+  $this->load->view('template/js'); 
 ?>
     
     <!-- Optional JavaScript -->
@@ -95,7 +95,7 @@
             map: map,
             position: {lat: latitud, lng: longitud},
             animation: google.maps.Animation.DROP,
-            title: 'Doble via La Paz - Oruro'
+            title: 'Proyecto'
           });
           
           marker1.addListener('mouseover', function() {
