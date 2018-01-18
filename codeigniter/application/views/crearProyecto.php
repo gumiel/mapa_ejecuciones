@@ -4,14 +4,17 @@
   $this->load->view('template/header');
   ?>
   <style>
-     #mapaGMaps {
+    #mapaGMaps {
       height: 300px;
       width: 100%;
-     }
-     #mapVP {
+    }
+    #mapVP {
       height: 300px;
       width: 100%;
-     }
+    }
+    .error{
+      color: #ec4848;
+    }
   </style>
   <body style="background:#51a75c">
  
@@ -21,11 +24,11 @@
       
       <div class="row">
         <div class="col-md-12">
-          <?php echo form_open_multipart('proyecto/procesarCreacion'); ?>
+          <?php echo form_open_multipart('proyecto/procesarCreacion',array('form' => 'formCrear', 'id'=> 'formCrear' )); ?>
             <div class="form-group row">
               <label for="titulo" class="col-sm-2 col-form-label">Titulo</label>
               <div class="col-sm-10">                
-                <?php echo form_input(array("class"=>"form-control", "id"=>"titulo",  "name"=>"titulo","value"=>"Planta de cítricos Lacteosbol" )); ?>
+                <?php echo form_input(array("class"=>"form-control", "id"=>"titulo",  "name"=>"titulo","value"=>"" )); ?>
               </div>
             </div>
             <div class="form-group row">
@@ -38,7 +41,7 @@
             <div class="form-group row">
               <label for="latitud" class="col-sm-2 col-form-label">Latitud</label>
               <div class="col-sm-8">
-                <?php echo form_input(array("class"=>"form-control","name"=>"latitud", "id"=>"latitud", "value"=>"-17.393308")); ?>
+                <?php echo form_input(array("class"=>"form-control","name"=>"latitud", "id"=>"latitud", "value"=>"")); ?>
               </div>
               <div class="col-sm-2">                
                 <?php echo form_input(array("class"=>"form-control", "name"=>"zoom", "id"=>"zoom", "value"=>"", "name"=>"zoom" )); ?>
@@ -47,7 +50,7 @@
             <div class="form-group row">
               <label for="longitud" class="col-sm-2 col-form-label">Longitud</label>
               <div class="col-sm-8">              
-                <?php echo form_input(array("class"=>"form-control","name"=>"longitud", "id"=>"longitud", "value"=>"-66.184276")); ?>              
+                <?php echo form_input(array("class"=>"form-control","name"=>"longitud", "id"=>"longitud", "value"=>"")); ?>              
               </div>
               <div class="col-sm-2">
                 <button type="button" class="btn btn-success" id="btnVerMapa">Ver Mapa</button>
@@ -206,6 +209,9 @@
 
     <script src="<?php echo base_url(); ?>public/app/crearProyecto.js" type="text/javascript"></script>
     
+    <script src="<?php echo base_url(); ?>public/js/jquery.validate.min.js"></script>
+    <script src="<?php echo base_url(); ?>public/js/jquery.validate.config.js"></script>
+
     <script >
 
       

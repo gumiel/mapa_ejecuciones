@@ -311,6 +311,45 @@ $(document).ready(function($){
     });
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+$("#formCrear").validate({
+	rules: {
+		titulo: "required",
+		descripcion: {
+			required: true,
+			minlength: 2
+		},
+		latitud: {
+			required: true,
+			minlength: 5,
+			latCoord: true
+		},
+		longitud: {
+			required: true,
+			minlength: 5,
+			longCoord: true
+		},
+		zoom: {
+			required: true,
+      		range: [6, 22]
+		},
+		departamento: "required",
+		categoria: "required"
+	}
+});
+
     
 });
 
