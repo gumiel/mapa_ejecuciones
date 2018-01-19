@@ -31,9 +31,11 @@ function verMapa(latitud, longitud){
 	if ( latitud != "" &&  longitud != "") {
 	  
 	  if(marker != null){
-	    console.log("matar marcador");
+	    
 	    marker.setMap(null);  
-	    infowindow.setMap(null);  
+	  	if(infowindow != null){
+	    	infowindow.setMap(null);  
+		}
 	  }
 	  
 	  var myLatLngMaker = {lat: parseFloat(latitud), lng: parseFloat(longitud)};
@@ -66,19 +68,32 @@ function verMapa(latitud, longitud){
 	  });
 	  
 	}else{
-	  console.log("sin datos");
-	  marker.setMap(null);
+	 
+		if(marker){
+	  		marker.setMap(null);			
+		} 
+	  
 	  map.setCenter(myLatLngDefault);
 	  map.setZoom(6);
-	  
 
+	  
+	  google.maps.event.addListener(map, 'click', function(event) {
+	    alert("asd");
+	    console.log(event.latLng);
+	    addMarkerClick(event.latLng, map);
+	  });
 	  
 	}        
 }
 
 function addMarkerClick(location, map) {
 
-	marker.setMap(null);
+	if(typeof maker != "undefined" ){
+		if( maker != null ){
+			marker.setMap(null);
+		}
+	}
+
 	marker = new google.maps.Marker({
 	  position: location,
 	  map: map
