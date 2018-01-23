@@ -77,9 +77,7 @@ function verMapa(latitud, longitud){
 	  map.setZoom(6);
 
 	  
-	  google.maps.event.addListener(map, 'click', function(event) {
-	    alert("asd");
-	    console.log(event.latLng);
+	  google.maps.event.addListener(map, 'click', function(event) {	    
 	    addMarkerClick(event.latLng, map);
 	  });
 	  
@@ -87,9 +85,11 @@ function verMapa(latitud, longitud){
 }
 
 function addMarkerClick(location, map) {
-
-	if(typeof maker != "undefined" ){
-		if( maker != null ){
+	
+	if(typeof marker != "undefined" ){
+		
+		if( marker != null ){
+		
 			marker.setMap(null);
 		}
 	}
@@ -99,14 +99,30 @@ function addMarkerClick(location, map) {
 	  map: map
 	});
 	var markerLatLng = marker.getPosition();
-	infowindow.setContent([
-	    '<strong>La posicion del marcador es:</strong><br/>',
-	    markerLatLng.lat(),
-	    ', ',
-	    markerLatLng.lng(),
-	    '<br/>Arrástrame para actualizar la posición.'
-	].join(''));
-	infowindow.open(map, marker);
+
+	if(infowindow != null){
+		infowindow.setContent([
+		    '<strong>La posicion del marcador es:</strong><br/>',
+		    markerLatLng.lat(),
+		    ', ',
+		    markerLatLng.lng(),
+		    '<br/>Arrástrame para actualizar la posición.'
+		].join(''));
+		infowindow.open(map, marker);
+	}else{
+		
+		var contentString = '<strong>La posicion del marcador es:</strong><br/>'+
+		markerLatLng.lat()+
+		', '+
+		markerLatLng.lng()+
+		'<br/>Arrástrame para actualizar la posición.';
+		infowindow = new google.maps.InfoWindow({
+		content: contentString
+		});
+
+		infowindow.open(map, marker);	 
+	}
+	
 
 }
 
