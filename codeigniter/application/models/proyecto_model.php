@@ -27,6 +27,7 @@ class Proyecto_model extends CI_Model {
 				 'longitud' => $data['longitud'], 
 				 'zoom' => $data['zoom'], 
 				 'id_departamento' => $data['id_departamento'], 
+				 'titulo_url' => $data['titulo_url'], 
 				 'id_categoria' => $data['id_categoria']));
 			$res = true;			
 		} catch (Exception $e) {
@@ -37,20 +38,38 @@ class Proyecto_model extends CI_Model {
 
 	public function listaPuntosMapa()
 	{		
-		$this->db->select('titulo as marcadorTexto, latitud, longitud');		
-		$this->db->order_by('id_proyecto', 'ASC');
-		$res = $this->db->get('proyecto');
+		$this->db->select('titulo as marcadorTexto, latitud, longitud, titulo_url, categoria.nombre as nombre_categoria,  departamento.nombre as nombre_departamento');		
+		$this->db->join('departamento', 'departamento.id_departamento = proyecto.id_departamento');	
+		$this->db->join('categoria', 'categoria.id_categoria = proyecto.id_categoria');	
+		$this->db->from('proyecto');
+		$this->db->order_by('proyecto.id_proyecto', 'ASC');
+		$res = $this->db->get();
 		return $res->result_array();
 	}
 
 	public function listaPuntosMapaPorDepartamento($nombreDepartamento)
 	{		
-		$this->db->select('titulo as marcadorTexto, latitud, longitud ');
+		$this->db->select('titulo as marcadorTexto, latitud, longitud, titulo_url');
 		$this->db->join('departamento', 'departamento.id_departamento = proyecto.id_departamento');	
 		$this->db->from('proyecto');	
 		$this->db->where('departamento.nombre_url', $nombreDepartamento);				
 		$res = $this->db->get();
 		return $res->result_array();
+	}
+
+	public function verProyecto($titulo_url){
+		$this->db->select('titulo, descripcion, latitud, longitud, zoom, categoria.nombre as nombre_categoria,  departamento.nombre as nombre_departamento');		
+		$this->db->join('departamento', 'departamento.id_departamento = proyecto.id_departamento');	
+		$this->db->join('categoria', 'categoria.id_categoria = proyecto.id_categoria');	
+		$this->db->from('proyecto');
+		$this->db->where('proyecto.titulo_url', $titulo_url);
+		$this->db->order_by('proyecto.id_proyecto', 'ASC');
+		$res = $this->db->get();		
+		return $res->row();
+	}
+
+	public function insertImagenes($imagenesBach){
+		$this->db->insert_batch('imagen', $imagenesBach);
 	}
 
 }

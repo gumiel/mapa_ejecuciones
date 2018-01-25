@@ -52,7 +52,7 @@
     
     <!-- Optional JavaScript -->
     <script async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBMn_-6DY-Yj1dxANofEJlcDDvOpNoxvFk&callback=initMap"  ></script>
-    
+    <script src="<?php echo base_url(); ?>public/app/mapa.js" type="text/javascript"></script>
 
     <script >
 
@@ -66,49 +66,15 @@
 <?php forEach($listaPuntos as $punto ){ ?>
 
       { marcadorTexto: '<?php echo $punto['marcadorTexto'] ?>', 
+      tituloUrl: '<?php echo base_url()."proyecto/ver/".$punto['titulo_url'] ?>', 
+      nombreDepartamento: '<?php echo $punto['nombre_departamento'] ?>', 
+      nombreCategoria: '<?php echo $punto['nombre_categoria'] ?>', 
       posicion: { latitud: <?php echo $punto['latitud'] ?>, longitud: <?php echo $punto['longitud'] ?> } },
 
 <?php } ?>
       ]
 
-      initMap(); 
-
-      function initMap(){
-        
-        map = new google.maps.Map(document.getElementById('map'), {
-          center: myLatLngDefault,
-          zoom: 6
-        });
-
-        
-
-        puntosList.forEach(function(e){
-          var marcadorTexto = e.marcadorTexto;
-          var latitud = e.posicion.latitud;
-          var longitud = e.posicion.longitud;
-
-          var infowindow = new google.maps.InfoWindow({
-            content: marcadorTexto
-          });
-
-          var marker1 = new google.maps.Marker({
-            map: map,
-            position: {lat: latitud, lng: longitud},
-            animation: google.maps.Animation.DROP,
-            title: 'Proyecto'
-          });
-          
-          marker1.addListener('mouseover', function() {
-            infowindow.open(map, marker1);
-          });
-          
-          marker1.addListener('mouseout', function() {
-            infowindow.close();
-          });
-
-        });
-      
-      }     
+           
       
     </script>
     

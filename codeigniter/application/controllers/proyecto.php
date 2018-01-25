@@ -18,6 +18,7 @@ class Proyecto extends CI_Controller {
 	    $config['allowed_types']        = 'gif|jpg|png';
 	    $config['max_size']             = 100000;
 	    $config['max_width']            = 2020;
+	    $config['encrypt_name']         = true;
 	    $config['max_height']           = 1768;
 	    
 
@@ -37,7 +38,7 @@ class Proyecto extends CI_Controller {
 		$this->load->view('listaProyectos', $data) ;
 	}
 
-	public function crear(){
+	public function crear($procesar = ""){
 
 		$selectCategoria = $this->categoria_model->categoriaSelectList();
 		$data['selectCategoria'] = formatoSelect($selectCategoria, "id", "nombre", "Seleccione");
@@ -46,6 +47,10 @@ class Proyecto extends CI_Controller {
 		$selectDepartamento = $this->departamento_model->departamentoSelectList();
 		$data['selectDepartamento'] = formatoSelect($selectDepartamento, "id", "nombre", "Seleccione");
 		$data['selectDepartamentoOpt'] = array('class' => "form-control", 'id'=> 'departamento');
+
+		
+		$data['procesar'] = $procesar;
+		
 
 		$this->load->view('crearProyecto', $data) ;
 
@@ -63,10 +68,13 @@ class Proyecto extends CI_Controller {
 		$titulo          = $this->input->post('titulo');
 
 		$files      = $_FILES;
-		$file_count = count($_FILES['imagen']['name']);		
+		$file_count = count($_FILES['imagen']['name']);	
+
+		$insertImagenBach = array();	
 
 		for($i = 0; $i < $file_count; $i++)
 		{
+			
 
 			$_FILES['upload_field_name']['name']     = $files['imagen']['name'][$i];
 			$_FILES['upload_field_name']['type']     = $files['imagen']['type'][$i];
@@ -74,9 +82,19 @@ class Proyecto extends CI_Controller {
 			$_FILES['upload_field_name']['error']    = $files['imagen']['error'][$i];
 			$_FILES['upload_field_name']['size']     = $files['imagen']['size'][$i];
 
+			
+
 		    if( $this->upload->do_upload('upload_field_name'))
 		    {
-		        echo "entro";
+		    	$fileInfo = $this->upload->data();
+
+		    	$this->_create_thumbnail($fileInfo['file_name']);
+
+		    	$imagen = array('nombre_imagen' => $files['imagen']['name'][$i], 
+				'nombre_imagen_min' => $files['imagen']['name'][$i]."_min",
+				'fecha_creacion' => "now()");
+				
+				array_push($insertImagenBach, $imagen);
 		        break;
 		    }
 			else
@@ -100,9 +118,15 @@ class Proyecto extends CI_Controller {
 			'longitud' => $longitud, 
 			'zoom' => $zoom, 
 			'id_departamento' => $id_departamento, 
-			'id_categoria' => $id_categoria);
+			'id_categoria' => $id_categoria,
+			'titulo_url' => url_title($titulo));
 			$this->proyecto_model->createProyecto($data);
-			redirect('proyecto/crear', 'refresh');
+
+			if(count($insertImagenBach)){
+				$this->proyecto_model->insertImagenes($insertImagenBach);				
+			}
+
+			redirect('proyecto/crear/procesar', 'refresh');
         }
         else
         {
@@ -132,5 +156,26 @@ class Proyecto extends CI_Controller {
 
 		$this->load->view('mapa', $data, FALSE);
 	}	
+
+	public function ver($titulo_url = ""){
+		$data = array('proyecto' => $this->proyecto_model->verProyecto($titulo_url) );		
+		$this->load->view('ver', $data, FALSE);
+	}
+
+	public function _create_thumbnail($filename){
+        $config['image_library'] = 'gd2';
+        //CARPETA EN LA QUE ESTÁ LA IMAGEN A REDIMENSIONAR
+        $config['source_image'] = 'imagenes_proyecto/'.$filename;
+        $config['create_thumb'] = TRUE;
+        $config['maintain_ratio'] = TRUE;
+        //CARPETA EN LA QUE GUARDAMOS LA MINIATURA
+        $config['new_image']='imagenes_proyecto/thumbs/';
+        $config['width'] = 150;
+        $config['height'] = 150;
+        $this->load->library('image_lib', $config); 
+        var_dump($this->image_lib->resize());
+    }
+
+
 
 }

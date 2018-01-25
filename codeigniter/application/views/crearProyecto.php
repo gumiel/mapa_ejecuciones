@@ -20,9 +20,12 @@
  
     <?php $this->load->view('template/menu'); ?>
     
-    <div class="container" style="margin-top:10px;background: white">
       
+    <div class="container">
       <div class="row">
+        <h3 style="display:inline">Crear Proyecto</h3>
+      </div>
+      <div class="row" style="margin-top:10px;background: white">
         <div class="col-md-12">
           <?php echo form_open_multipart('proyecto/procesarCreacion',array('form' => 'formCrear', 'id'=> 'formCrear' )); ?>
             <div class="form-group row">
@@ -171,8 +174,7 @@
                       <br>
                       <u>Categorias:</u> <span class="badge badge-primary" id="categoriaVP"></span> 
                     </p>
-                    <p class="card-text" id="descripcionVP"></p>
-                    <a href="#" class="btn btn-primary">Ver mas...</a>
+                    <p class="card-text" id="descripcionVP"></p>                    
                   </div>
                 </div>
                 
@@ -186,6 +188,23 @@
       </div>
     </div>
 
+
+
+<div class="modal fade show" id="msj" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" >
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-header">
+        Mensaje
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <h5 class="modal-title">Se creo el proyecto</h5>
+      </div>
+    </div>
+  </div>
+</div>
 
 
 <?php 
@@ -214,10 +233,14 @@
 
     <script >
 
-      
+            
 
 
-      
+      jQuery(document).ready(function($) {
+        <?php if($procesar != ""){ ?>
+        $("#msj").modal("show");
+        <?php } ?>
+      });
 
       
 

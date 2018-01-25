@@ -10,7 +10,7 @@
         <a class="nav-link" href="index.php">Inicio <span class="sr-only">(current)</span></a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="mapa.php">Mapa</a>
+        <a class="nav-link" href="<?php echo base_url()."proyecto/mapa" ?>">Mapa</a>
       </li>
       <li class="nav-item">
         <a class="nav-link disabled" href="#">Login</a>
@@ -23,6 +23,9 @@
           <a class="dropdown-item" href="lista.php">Hospitales</a>
           <a class="dropdown-item" href="lista.php">Puentes</a>
         </div>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="<?php echo base_url()."proyecto/crear" ?>">Crear</a>
       </li>
     </ul>
     <form class="form-inline my-2 my-lg-0">

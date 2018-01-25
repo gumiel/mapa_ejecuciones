@@ -26,7 +26,7 @@ function initMap(){
 }
 
 
-function verMapa(latitud, longitud){
+function verMapa(latitud, longitud, zoom){
 
 	if ( latitud != "" &&  longitud != "") {
 	  
@@ -38,15 +38,17 @@ function verMapa(latitud, longitud){
 		}
 	  }
 	  
+	  var zoom1 = (zoom != "")? zoom: 14;
+
 	  var myLatLngMaker = {lat: parseFloat(latitud), lng: parseFloat(longitud)};
 
-	  map.setCenter(myLatLngMaker);
-	  map.setZoom(14);
+	  map.setCenter(myLatLngMaker);	  
+	  map.setZoom(parseInt(zoom1));
 	  
 	  marker = new google.maps.Marker({
 	    map: map,
 	    position: myLatLngMaker,
-	    draggable: true,
+	    // draggable: true,
 	    animation: google.maps.Animation.DROP,
 	    title: 'Marcador arrastrable'
 	  });
@@ -138,7 +140,7 @@ function modifiZoom(){
 }
 
 function initMapVistaPrevia(){
-	console.log("VISTA PREVIA MAPA");
+	
 	mapVP = new google.maps.Map(document.getElementById('mapVP'), {
 	  center: myLatLngDefaultVP,
 	  zoom: 6
@@ -148,17 +150,16 @@ function initMapVistaPrevia(){
 
 function verMapaVistaPrevia(latitudVP, longitudVP, zoomVP){
 	if ( latitudVP != "" &&  longitudVP != "") {
-
-	  console.log("con datos");
 	  
 	  if(markerVP != null){
-	    console.log("matar marcador");
+
 	    markerVP.setMap(null);  
 	    infowindowVP.setMap(null);  
+	  
 	  }
 	  
 	  var myLatLngMakerVP = {lat: parseFloat(latitudVP), lng: parseFloat(longitudVP)};
-	  console.log(myLatLngMakerVP);
+	  
 	  mapVP.setCenter(myLatLngMakerVP);
 	  mapVP.setZoom(parseInt(zoomVP)) ;
 	  
@@ -182,12 +183,10 @@ function verMapaVistaPrevia(latitudVP, longitudVP, zoomVP){
 	  infowindowVP.open(mapVP, markerVP);
 	  
 	}else{
-	  console.log("sin datos");
+	  
 	  markerVP.setMap(null);
 	  mapVP.setCenter(myLatLngDefaultVP);
 	  mapVP.setZoom(6);
-	  
-
 	  
 	} 
 }
@@ -248,13 +247,13 @@ $(document).ready(function($){
     $('#modalMapa').on('shown.bs.modal', function (e) {
       var latitud = $("#latitud").val();
       var longitud = $("#longitud").val();
+      var zoom = $("#zoom").val();
       
-      if(map == null){
-        console.log("creado nuevo");
+      if(map == null){       
         initMap();            
       }
       
-      verMapa(latitud, longitud);
+      verMapa(latitud, longitud, zoom);
       modifiZoom();
 
     })
@@ -280,15 +279,16 @@ $(document).ready(function($){
 	// ACCIONES PARA LA VISTA PREVIA
 
     $("#vistaPrevia").click(function(){
-      
-      $("#listaImgVistaPrevia").html('');          
-      $("#modalMapaVistaPrevia").modal("show");             
-      $("input[name='imagen[]']").each(function(){
+    	if($("#formCrear").valid()){
+	      $("#listaImgVistaPrevia").html('');          
+	      $("#modalMapaVistaPrevia").modal("show");             
+	      $("input[name='imagen[]']").each(function(){
 
-        //cadenaImagenes = new array();
-        seleccionArchivo(this);  
-      
-      });
+	        //cadenaImagenes = new array();
+	        seleccionArchivo(this);  
+	      
+	      });    		
+    	}
 
     });
 
@@ -298,19 +298,20 @@ $(document).ready(function($){
       var longitudVP = $("#longitud").val();
       var zoomVP = $("#zoom").val();
       
-      if(mapVP == null){
-        console.log("creado nuevo");
+      if(mapVP == null){        
         initMapVistaPrevia();           
       }
       
       verMapaVistaPrevia(latitudVP, longitudVP, zoomVP);
 
       $("#tituloVP").html($("#titulo").val());
-      $("#descripcionVP").html($("#descripcion").html());
+      $("#descripcionVP").html($("#descripcion").val());
       $("#departamentoVP").html($("#departamento > option[value='"+$("#departamento").val()+"']").html());
       $("#categoriaVP").html($("#categoria > option[value='"+$("#categoria").val()+"']").html());          
 
     })
+
+
 
 
 
