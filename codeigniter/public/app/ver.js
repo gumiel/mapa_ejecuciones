@@ -1,10 +1,14 @@
 
 
 function initMap(){
+
+  var myLatLngMaker = {lat: parseFloat(punto.posicion.latitud), lng: parseFloat(punto.posicion.longitud)};
+
+    
   
   map = new google.maps.Map(document.getElementById('map'), {
-    center: myLatLngDefault,
-    zoom: 6
+    center: myLatLngMaker,
+    zoom: parseInt(punto.zoom)
   });
 
   
@@ -15,6 +19,7 @@ function initMap(){
     var nombreCategoria = punto.nombreCategoria;
     var latitud = punto.posicion.latitud;
     var longitud = punto.posicion.longitud;
+    var zoom = punto.zoom;
 
     var infowindow = new google.maps.InfoWindow({
       content: "<h5>"+marcadorTexto+"</h5><p><u>Dep.</u> <i>"

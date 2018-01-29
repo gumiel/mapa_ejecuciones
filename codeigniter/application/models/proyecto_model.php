@@ -9,16 +9,22 @@ class Proyecto_model extends CI_Model {
 		// $this->load->library('encrypt');
 	}
 
-	public function listProyectoPorCategoria()
+	public function listProyectoPorCategoria($categoria = '')
 	{		
 		$this->db->select('*');		
-		$this->db->order_by('id_proyecto', 'ASC');
+		$this->db->join('imagen', 'imagen.id_proyecto = proyecto.id_proyecto AND imagen.portada = 1');		
+		
+		if($categoria != ''){
+			$this->db->join('categoria', 'categoria.id_categoria = proyecto.id_categoria');
+			$this->db->where('categoria.nombre', $categoria);							
+		}
+
 		$res = $this->db->get('proyecto');
 		return $res->result_array();
 	}
 
 	public function createProyecto($data){
-		$res = false;
+		$res = 0;
 		try {
 			$this->db->insert('proyecto', array(
 				'titulo' => $data['titulo'], 
@@ -29,7 +35,7 @@ class Proyecto_model extends CI_Model {
 				 'id_departamento' => $data['id_departamento'], 
 				 'titulo_url' => $data['titulo_url'], 
 				 'id_categoria' => $data['id_categoria']));
-			$res = true;			
+			$res = $this->db->insert_id();			
 		} catch (Exception $e) {
 			echo $e;
 		}
@@ -58,7 +64,7 @@ class Proyecto_model extends CI_Model {
 	}
 
 	public function verProyecto($titulo_url){
-		$this->db->select('titulo, descripcion, latitud, longitud, zoom, categoria.nombre as nombre_categoria,  departamento.nombre as nombre_departamento');		
+		$this->db->select('id_proyecto, titulo, descripcion, latitud, longitud, zoom, categoria.nombre as nombre_categoria,  departamento.nombre as nombre_departamento');		
 		$this->db->join('departamento', 'departamento.id_departamento = proyecto.id_departamento');	
 		$this->db->join('categoria', 'categoria.id_categoria = proyecto.id_categoria');	
 		$this->db->from('proyecto');

@@ -7,7 +7,7 @@
   <div class="collapse navbar-collapse" id="navbarsExampleDefault">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item active">
-        <a class="nav-link" href="index.php">Inicio <span class="sr-only">(current)</span></a>
+        <a class="nav-link" href="<?php echo base_url()."proyecto/"; ?>">Inicio <span class="sr-only">(current)</span></a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="<?php echo base_url()."proyecto/mapa" ?>">Mapa</a>
@@ -16,12 +16,13 @@
         <a class="nav-link disabled" href="#">Login</a>
       </li>
       <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="http://example.com" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Categorias</a>
+        <a class="nav-link dropdown-toggle" href="" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Categorias</a>
         <div class="dropdown-menu" aria-labelledby="dropdown01">
-          <a class="dropdown-item" href="lista.php">Caminos</a>
-          <a class="dropdown-item" href="lista.php">Escuelas</a>
-          <a class="dropdown-item" href="lista.php">Hospitales</a>
-          <a class="dropdown-item" href="lista.php">Puentes</a>
+          
+          <?php foreach (listCagetoria() as $categoria): ?>
+            <a class="dropdown-item" href="<?php echo base_url()."proyecto/categoria/".$categoria['nombre']; ?>"><?php echo $categoria['nombre'] ?></a>            
+          <?php endforeach ?>
+          
         </div>
       </li>
       <li class="nav-item">

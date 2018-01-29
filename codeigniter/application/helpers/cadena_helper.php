@@ -1,7 +1,7 @@
 <?php 
 
 function cortador200($cadena){
-	return substr($cadena, 0, 200);	
+	return substr(strip_tags($cadena, '<br>'), 0, 400);	
 }
 
  ?>

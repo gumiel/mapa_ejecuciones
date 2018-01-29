@@ -23,9 +23,15 @@
               <div id="map">MAPA</div>
             </div>
           </div>
-            
+          <br>
           <div class="card">
-            <div class="card-body" id="listaImgVistaPrevia"></div>
+            <div class="card-body" id="listaImgVistaPrevia">
+              
+              <?php foreach ($imagenes as $imagen ): ?>
+                <img class="rounded" style="width: 168px; height: 150px;" src="<?php echo base_url()."imagenes_proyecto/thumbs/".$imagen['nombre_imagen_min']; ?>" >                
+              <?php endforeach ?>
+           
+            </div>
           </div>
             
         </div>
@@ -89,6 +95,7 @@
       { marcadorTexto: '<?php echo $proyecto->titulo ?>',        
       nombreDepartamento: '<?php echo $proyecto->nombre_departamento ?>', 
       nombreCategoria: '<?php echo $proyecto->nombre_categoria ?>', 
+      zoom: '<?php echo $proyecto->zoom ?>',
       posicion: { latitud: <?php echo $proyecto->latitud ?>, longitud: <?php echo $proyecto->longitud ?> } }
 
 

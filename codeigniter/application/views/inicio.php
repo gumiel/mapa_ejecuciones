@@ -6,8 +6,49 @@
   <body style="background:#51a75c">
  
     <?php $this->load->view('template/menu'); ?>
-    
+    <style type="text/css">
+      .rslides {
+  position: relative;
+  list-style: none;
+  overflow: hidden;
+  width: 100%;
+  padding: 0;
+  margin: 0;
+  }
+
+.rslides li {
+  -webkit-backface-visibility: hidden;
+  position: absolute;
+  display: none;
+  width: 100%;
+  left: 0;
+  top: 0;
+  }
+
+.rslides li:first-child {
+  position: relative;
+  display: block;
+  float: left;
+  }
+
+.rslides img {
+  display: block;
+  height: auto;
+  float: left;
+  width: 100%;
+  border: 0;
+  }
+    </style>
     <div class="container" style="margin-top:10px">
+      <div class="row">
+        <div class="col-md-12">
+          <ul id="slides" class='rslides'>
+            <li><img src="<?php echo base_url()."imagenes_proyecto/" ?>1.jpg" alt=""></li>
+            <li><img src="<?php echo base_url()."imagenes_proyecto/" ?>2.jpg" alt=""></li>
+            <li><img src="<?php echo base_url()."imagenes_proyecto/" ?>3.jpg" alt=""></li>
+          </ul>
+        </div>
+      </div>  
       <div class="row">
         <div class="col-md-4">
           <h3 class="text-center mb-5">Simple Card</h3>
@@ -77,43 +118,36 @@
     <!-- Optional JavaScript -->
     
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
-    <script src="assets/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBMn_-6DY-Yj1dxANofEJlcDDvOpNoxvFk"  ></script>
+<?php 
+  $this->load->view('template/js'); 
+?>
+  
+    <script src="<?php echo base_url(); ?>public/js/responsiveslides.min.js" ></script>
+    
     <script >
       $(document).ready(function(){
-        initMap();
-        function initMap(){
-          var contentString = '<div id="content">'+
-            '<div id="siteNotice">'+
-            '</div>'+
-            '<h3 id="firstHeading" class="firstHeading">Industrias</h3>'+
-            '<div id="bodyContent">'+
-            '<p><b>LACTEOS BOL</b> Planta industrializadora de leche</b>, is a large ' +
-            '.</p>'+
-            '</div>'+
-            '</div>';
-          var infowindow = new google.maps.InfoWindow({
-            content: contentString
-          });
-           
-          var myLatLng = {lat: -16.833564, lng: -65.348245};
-          var map = new google.maps.Map(document.getElementById('map'), {
-            center: myLatLng,
-            zoom: 16
-          });
-          var marker = new google.maps.Marker({
-            map: map,
-            position: myLatLng,
-            animation: google.maps.Animation.DROP,
-            title: 'Doble via La Paz - Oruro'
-          });
-          marker.addListener('click', function() {
-            infowindow.open(map, marker);
-          });
-          
-        }
+        
+        
+        $(".rslides").responsiveSlides({
+  auto: true,             // Boolean: Animate automatically, true or false
+  speed: 500,            // Integer: Speed of the transition, in milliseconds
+  timeout: 4000,          // Integer: Time between slide transitions, in milliseconds
+  pager: false,           // Boolean: Show pager, true or false
+  nav: false,             // Boolean: Show navigation, true or false
+  random: false,          // Boolean: Randomize the order of the slides, true or false
+  pause: false,           // Boolean: Pause on hover, true or false
+  pauseControls: true,    // Boolean: Pause when hovering controls, true or false
+  prevText: "Previous",   // String: Text for the "previous" button
+  nextText: "Next",       // String: Text for the "next" button
+  maxwidth: "",           // Integer: Max-width of the slideshow, in pixels
+  navContainer: "",       // Selector: Where controls should be appended to, default is after the 'ul'
+  manualControls: "",     // Selector: Declare custom pager navigation
+  namespace: "rslides",   // String: Change the default namespace used
+  before: function(){},   // Function: Before callback
+  after: function(){}     // Function: After callback
+});
+        
+        
         
       })
     </script>

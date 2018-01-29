@@ -9,10 +9,14 @@ class Proyecto extends CI_Controller {
 		$this->load->model('proyecto_model');		
 		$this->load->model('categoria_model');		
 		$this->load->model('departamento_model');		
+		$this->load->model('imagen_model');		
 		$this->load->helper("cadena");
 		$this->load->helper("select_helper");
-		 $this->load->library('form_validation');
-        $this->load->helper(array('form', 'url'));
+		$this->load->library('form_validation');
+        $this->load->library('image_lib'); 
+        $this->load->helper(array('form', 'url', 'proyecto_helper'));
+
+
 
         $config['upload_path']          = './imagenes_proyecto/';
 	    $config['allowed_types']        = 'gif|jpg|png';
@@ -35,6 +39,7 @@ class Proyecto extends CI_Controller {
 	public function categoria($categoria=""){
 		
 		$data['proyectos'] = $this->proyecto_model->listProyectoPorCategoria($categoria);
+		$data['categoria'] = $categoria;
 		$this->load->view('listaProyectos', $data) ;
 	}
 
@@ -70,41 +75,7 @@ class Proyecto extends CI_Controller {
 		$files      = $_FILES;
 		$file_count = count($_FILES['imagen']['name']);	
 
-		$insertImagenBach = array();	
-
-		for($i = 0; $i < $file_count; $i++)
-		{
-			
-
-			$_FILES['upload_field_name']['name']     = $files['imagen']['name'][$i];
-			$_FILES['upload_field_name']['type']     = $files['imagen']['type'][$i];
-			$_FILES['upload_field_name']['tmp_name'] = $files['imagen']['tmp_name'][$i];
-			$_FILES['upload_field_name']['error']    = $files['imagen']['error'][$i];
-			$_FILES['upload_field_name']['size']     = $files['imagen']['size'][$i];
-
-			
-
-		    if( $this->upload->do_upload('upload_field_name'))
-		    {
-		    	$fileInfo = $this->upload->data();
-
-		    	$this->_create_thumbnail($fileInfo['file_name']);
-
-		    	$imagen = array('nombre_imagen' => $files['imagen']['name'][$i], 
-				'nombre_imagen_min' => $files['imagen']['name'][$i]."_min",
-				'fecha_creacion' => "now()");
-				
-				array_push($insertImagenBach, $imagen);
-		        break;
-		    }
-			else
-		    {
-		        echo "no entro";
-		        // Successfull file upload
-		        var_dump($this->upload->display_errors());
-		        break;
-		    }
-		} 
+		
 
 
 
@@ -120,7 +91,42 @@ class Proyecto extends CI_Controller {
 			'id_departamento' => $id_departamento, 
 			'id_categoria' => $id_categoria,
 			'titulo_url' => url_title($titulo));
-			$this->proyecto_model->createProyecto($data);
+			$idProyecto = $this->proyecto_model->createProyecto($data);
+
+			
+
+
+			// Crear imagenes
+			$insertImagenBach = array();	
+
+			for($i = 0; $i < $file_count; $i++)
+			{				
+
+				$_FILES['upload_field_name']['name']     = $files['imagen']['name'][$i];
+				$_FILES['upload_field_name']['type']     = $files['imagen']['type'][$i];
+				$_FILES['upload_field_name']['tmp_name'] = $files['imagen']['tmp_name'][$i];
+				$_FILES['upload_field_name']['error']    = $files['imagen']['error'][$i];
+				$_FILES['upload_field_name']['size']     = $files['imagen']['size'][$i];				
+
+			    if( $this->upload->do_upload('upload_field_name'))
+			    {
+			    	$fileInfo = $this->upload->data();
+
+			    	$this->_create_thumbnail($fileInfo['file_name']);
+
+			    	$imagen = array('nombre_imagen' => $fileInfo['file_name'], 
+					'nombre_imagen_min' => $fileInfo['raw_name'].'_thumb'.$fileInfo['file_ext'],
+					'fecha_creacion' => "now()", 'id_proyecto' => $idProyecto);
+					
+					array_push($insertImagenBach, $imagen);
+			        
+			    }
+				else
+			    {			        			     
+			        var_dump($this->upload->display_errors());
+			        break;
+			    }
+			} 
 
 			if(count($insertImagenBach)){
 				$this->proyecto_model->insertImagenes($insertImagenBach);				
@@ -158,11 +164,15 @@ class Proyecto extends CI_Controller {
 	}	
 
 	public function ver($titulo_url = ""){
-		$data = array('proyecto' => $this->proyecto_model->verProyecto($titulo_url) );		
+		
+		$data = array('proyecto' => $this->proyecto_model->verProyecto($titulo_url) );				
+		$data['imagenes'] = $this->imagen_model->listImagenes($data['proyecto']->id_proyecto);		
 		$this->load->view('ver', $data, FALSE);
+		
 	}
 
 	public function _create_thumbnail($filename){
+        
         $config['image_library'] = 'gd2';
         //CARPETA EN LA QUE ESTÁ LA IMAGEN A REDIMENSIONAR
         $config['source_image'] = 'imagenes_proyecto/'.$filename;
@@ -172,8 +182,12 @@ class Proyecto extends CI_Controller {
         $config['new_image']='imagenes_proyecto/thumbs/';
         $config['width'] = 150;
         $config['height'] = 150;
-        $this->load->library('image_lib', $config); 
-        var_dump($this->image_lib->resize());
+        
+        $this->image_lib->initialize($config);
+        
+        $this->image_lib->resize();
+        $this->image_lib->clear();        
+
     }
 
 
