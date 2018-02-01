@@ -13,7 +13,7 @@ class FacebookCodeigniter
 	}
 
 	public function saludo(){
-
+		echo "ESTO ES DEL MARTES GITLAB";
 		$fb = new Facebook\Facebook([
 		  'app_id' => '167901477164526',
 		  'app_secret' => '4c3b53183f8760bda5377482124e7f71',
