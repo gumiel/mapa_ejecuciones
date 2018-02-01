@@ -50,18 +50,25 @@
         </div>
       </div>  
       <div class="row">
-        <div class="col-md-4">
-          <h3 class="text-center mb-5">Simple Card</h3>
-          <div class="card card-01">
-            <img class="card-img-top" src="http://www.comunicacion.gob.bo/sites/default/files/styles/370x240/public/media/images/25352134_1045597395582484_1807840721650170897_o.jpg?itok=a-vmoA4n" alt="Card image cap">
-            <div class="card-body">
-              <span class="badge-box"><i class="fa fa-check"></i></span>
-              <h4 class="card-title">Card title</h4>
-              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-              <a href="#" class="btn btn-default text-uppercase">Ver</a>
+
+        <?php foreach ($proyectos as $proyecto): ?>
+          
+          <div class="col-md-4">
+            <h3 class="text-center mb-5"><?php echo $proyecto['nombre_departamento'] ?></h3>
+            <div class="card card-01">
+              <img class="card-img-top" src="<?php echo base_url()."imagenes_proyecto/thumbs/".$proyecto['nombre_imagen_min'] ?>" max-width="370" max-height='240' >
+              <div class="card-body">
+                <span class="badge-box"><i class="fa fa-check"></i></span>
+                <h4 class="card-title"><?php echo $proyecto['titulo'] ?></h4>
+                <p class="card-text">
+                  <?php echo cortadorCadena200($proyecto['descripcion']); ?>                
+                </p>
+                <a href="#" class="btn btn-default text-uppercase">Ver</a>
+              </div>
             </div>
           </div>
-        </div>
+
+        <?php endforeach ?>
         
         <div class="col-md-4">
           <h3 class="text-center mb-5">Card with Slider</h3>

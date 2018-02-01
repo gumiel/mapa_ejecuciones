@@ -78,6 +78,21 @@ class Proyecto_model extends CI_Model {
 		$this->db->insert_batch('imagen', $imagenesBach);
 	}
 
+	public function listProyectoUltimos()
+	{		
+		$this->db->select('proyecto.titulo as titulo, 
+							proyecto.descripcion as descripcion,
+							categoria.nombre as nombre_categoria,
+							departamento.nombre as nombre_departamento,
+							imagen.nombre_imagen_min as nombre_imagen_min  ');		
+		$this->db->join('imagen', 'imagen.id_proyecto = proyecto.id_proyecto AND imagen.portada = 1');		
+		$this->db->join('categoria', 'categoria.id_categoria = proyecto.id_categoria');		
+		$this->db->join('departamento', 'departamento.id_departamento = proyecto.id_departamento');		
+		$res = $this->db->get('proyecto');
+
+		return $res->result_array();
+	}
+
 }
 
 /* End of file proyecto_model.php */

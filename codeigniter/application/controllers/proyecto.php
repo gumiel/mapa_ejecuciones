@@ -15,6 +15,7 @@ class Proyecto extends CI_Controller {
 		$this->load->library('form_validation');
         $this->load->library('image_lib'); 
         $this->load->helper(array('form', 'url', 'proyecto_helper'));
+        $this->load->library('FacebookCodeigniter');
 
 
 
@@ -31,7 +32,8 @@ class Proyecto extends CI_Controller {
 	}
 
 	public function index(){    
-		$this->load->view('inicio');
+		$data['proyectos'] = $this->proyecto_model->listProyectoUltimos();
+		$this->load->view('inicio', $data);
 	}
 
 	
@@ -187,6 +189,12 @@ class Proyecto extends CI_Controller {
         
         $this->image_lib->resize();
         $this->image_lib->clear();        
+
+    }
+
+    public function pruebaFacebook(){
+
+    	$this->facebookcodeigniter->saludo();
 
     }
 
